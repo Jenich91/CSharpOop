@@ -26,18 +26,16 @@ namespace ShapesTask
             {
                 throw new Exception("Параметр должен быть типа Shape");
             }
-
         }
 
         static double GetMaxArea(IShape[] shapes)
         {
             Array.Sort(shapes);
-
+            //TODO return area in last element
             return 0;
         }
         static void Main(string[] args)
         {
-            Shape.Square s = new Square();
             IShape[] shapes = { new Shape.Square(2), new Shape.Triangle(2, 3, 6, 3, 4, 0), new Shape.Triangle(12, -3, 6, 3, 2, 0), new Shape.Rectangle(3, 4), new Shape.Circle(3) };
             Console.WriteLine(GetMaxArea(shapes));
         }

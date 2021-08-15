@@ -60,7 +60,7 @@ namespace AcademIT.Vyatkin
 
             //Console.WriteLine("Расстояние между двумя точками: " + FindDistanceBetweenPoints(pointA, pointB));
             
-            //Part_2______________________________________________
+            // Part_2______________________________________________
 
             // Вводим числа диапозона
             Console.WriteLine("Введите число начало первого диапазона: ");

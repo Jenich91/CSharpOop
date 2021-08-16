@@ -1,43 +1,59 @@
 ﻿using System;
-using ShapesTask;
+using System.Collections.Generic;
 
 namespace ShapesTask
 {
-    class ShapeTask : IComparable
+    class ShapeTask// : IComparer<IShape>
     {
-        public int CompareTo(object obj)
-        {
-            Shape shape = obj as Shape;
+        //    public int Compare(IShape shape1, IShape shape2)
+        //    {
+        //        if (Shape.GetArea(shape1) < Shape.GetArea(shape2))
+        //        {
+        //            return -1;
+        //        }
+        //        else if (Shape.GetArea(shape1) > Shape.GetArea(shape2))
+        //        {
+        //            return 1;
+        //        }
 
-            if (shape != null)
-            {
-                if (this.GetArea() < shape.GetArea())
-                {
-                    return -1;
-                }
-                else if (this.GetArea() > shape.GetArea())
-                {
-                    return 1;
-                }
+        //        return 0;
+        //    }
 
-                return 0;
-            }
-            else
-            {
-                throw new Exception("Параметр должен быть типа Shape");
-            }
-        }
+        //public int CompareTo(IShape shape2)
+        //{
+
+
+        //    if (shape != null)
+        //    {
+        //        if (this.GetArea() < Shape.GetArea(shape2))
+        //        {
+        //            return -1;
+        //        }
+        //        else if (this.GetArea() > Shape.GetArea(shape2))
+        //        {
+        //            return 1;
+        //        }
+
+        //        return 0;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Параметр должен быть типа Shape");
+        //    }
+        //}
 
         static double GetMaxArea(IShape[] shapes)
         {
-            Array.Sort(shapes);
+            Array.Sort(shapes, new CompareClass());
             //TODO return area in last element
             return 0;
         }
         static void Main(string[] args)
         {
-            IShape[] shapes = { new Shape.Square(2), new Shape.Triangle(2, 3, 6, 3, 4, 0), new Shape.Triangle(12, -3, 6, 3, 2, 0), new Shape.Rectangle(3, 4), new Shape.Circle(3) };
+            IShape[] shapes = { new Square(2), new Triangle(2, 3, 6, 3, 4, 0), new Triangle(12, -3, 6, 3, 2, 0), new Rectangle(3, 4), new Circle(3) };
             Console.WriteLine(GetMaxArea(shapes));
+            //IShape d = new Square(3);
+            //Shape.GetArea(d);
         }
     }
 }

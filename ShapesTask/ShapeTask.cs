@@ -1,59 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace ShapesTask
+namespace AcademIT.Vyatkin
 {
-    class ShapeTask// : IComparer<IShape>
+    class ShapeTask
     {
-        //    public int Compare(IShape shape1, IShape shape2)
-        //    {
-        //        if (Shape.GetArea(shape1) < Shape.GetArea(shape2))
-        //        {
-        //            return -1;
-        //        }
-        //        else if (Shape.GetArea(shape1) > Shape.GetArea(shape2))
-        //        {
-        //            return 1;
-        //        }
-
-        //        return 0;
-        //    }
-
-        //public int CompareTo(IShape shape2)
-        //{
-
-
-        //    if (shape != null)
-        //    {
-        //        if (this.GetArea() < Shape.GetArea(shape2))
-        //        {
-        //            return -1;
-        //        }
-        //        else if (this.GetArea() > Shape.GetArea(shape2))
-        //        {
-        //            return 1;
-        //        }
-
-        //        return 0;
-        //    }
-        //    else
-        //    {
-        //        throw new Exception("Параметр должен быть типа Shape");
-        //    }
-        //}
-
-        static double GetMaxArea(IShape[] shapes)
+        static int FindShapeWithMaximumArea(IShape[] shapes)
         {
-            Array.Sort(shapes, new CompareClass());
-            //TODO return area in last element
-            return 0;
+            Array.Sort(shapes, new AreaComparer());
+
+            int lastElementIndex = shapes.GetLength(0) - 1;
+            return lastElementIndex;
         }
+
+        static int FindShapeWithSecondPerimeter(IShape[] shapes)
+        {
+            Array.Sort(shapes, new PerimeterComparer());
+
+            int prelastElementIndex = shapes.GetLength(0) - 2;
+            return prelastElementIndex;
+        }
+
         static void Main(string[] args)
         {
-            IShape[] shapes = { new Square(2), new Triangle(2, 3, 6, 3, 4, 0), new Triangle(12, -3, 6, 3, 2, 0), new Rectangle(3, 4), new Circle(3) };
-            Console.WriteLine(GetMaxArea(shapes));
-            //IShape d = new Square(3);
-            //Shape.GetArea(d);
+            IShape[] shapes = { new Square(2), new Square(2), new Triangle(2, 3, 6, 3, 4, 12), new Triangle(3, 3, 6, 3, 4, 12), new Rectangle(4, 4), new Rectangle(3, 4), new Circle(4), new Circle(3) };
+
+            Console.WriteLine("Фигура с максимальной площадью - " + shapes[FindShapeWithMaximumArea(shapes)]);
+            Console.WriteLine("Фигура со вторым по величине периметром - " + shapes[FindShapeWithSecondPerimeter(shapes)]);
+
+            Console.WriteLine("Фигура - " + shapes[0] + " равна " + "фигуре - " + shapes[1] + " ?");
+            Console.WriteLine(shapes[0].Equals(shapes[1]) ? "Да" : "Нет");
         }
     }
 }

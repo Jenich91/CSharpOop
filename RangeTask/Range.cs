@@ -78,11 +78,11 @@
             if (this.From < rangeB.To && this.To > rangeB.From)
             {
                 double minValueFrom = this.From < rangeB.From ? this.From : rangeB.From;
-                if(minValueFrom == this.From)
+                if (minValueFrom == this.From)
                 {
                     return new Range(rangeB.From, this.To);
                 }
-                
+
                 return new Range(rangeB.To, this.To);
             }
 

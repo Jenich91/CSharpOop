@@ -59,10 +59,10 @@ namespace AcademIT.Vyatkin
             //Range pointB = new Range(x2, y2);
 
             //Console.WriteLine("Расстояние между двумя точками: " + FindDistanceBetweenPoints(pointA, pointB));
-            
+
             // Part_2______________________________________________
 
-            // Вводим числа диапозона
+            // Вводим числа диапазон
             Console.WriteLine("Введите число начало первого диапазона: ");
             double rangeStart1 = Convert.ToDouble(Console.ReadLine());
 
@@ -70,7 +70,7 @@ namespace AcademIT.Vyatkin
             double rangeEnd1 = Convert.ToDouble(Console.ReadLine());
 
             Range interval1 = new Range(rangeStart1, rangeEnd1);
-            // Вводим числа второго диапозона
+            // Вводим числа второго диапазон
             Console.WriteLine("Введите число начало второго диапазона: ");
             double rangeStart2 = Convert.ToDouble(Console.ReadLine());
 

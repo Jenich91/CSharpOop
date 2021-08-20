@@ -1,12 +1,27 @@
 ﻿using System;
 
-namespace ShapesTask
+namespace AcademIT.Vyatkin
 {
     public class Shape
     {
+        public double GetWidth(IShape shape)
+        {
+            return shape.GetWidth();
+        }
+
+        public double GetHeight(IShape shape)
+        {
+            return shape.GetHeight();
+        }
+
         public static double GetArea(IShape shape)
         {
             return shape.GetArea();
+        }
+
+        public static double GetPerimeter(IShape shape)
+        {
+            return shape.GetPerimeter();
         }
     }
 
@@ -17,6 +32,31 @@ namespace ShapesTask
         public Square(double sideLength)
         {
             this.SideLength = sideLength;
+        }
+
+        public override string ToString()
+        {
+            return string.Join(",", GetWidth(), GetHeight(), GetArea(), GetPerimeter());
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(obj, this))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null) || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            return (SideLength == ((Square)obj).SideLength);
+        }
+
+        public override int GetHashCode()
+        {
+            return (int)SideLength;
         }
 
         public double GetWidth()
@@ -42,12 +82,16 @@ namespace ShapesTask
 
     public class Triangle : IShape
     {
-        public double X1 { get; set; }
-        public double Y1 { get; set; }
-        public double X2 { get; set; }
-        public double Y2 { get; set; }
-        public double X3 { get; set; }
-        public double Y3 { get; set; }
+        private double X1 { get; set; }
+        private double Y1 { get; set; }
+        private double X2 { get; set; }
+        private double Y2 { get; set; }
+        private double X3 { get; set; }
+        private double Y3 { get; set; }
+
+        private double sideAB { get; set; }
+        private double sideBC { get; set; }
+        private double sideCA { get; set; }
 
         public Triangle(double x1, double y1, double x2, double y2, double x3, double y3)
         {
@@ -57,7 +101,42 @@ namespace ShapesTask
             Y2 = y2;
             X3 = x3;
             Y3 = y3;
+
+            this.sideAB = GetTriangleSideLength(X1, Y1, X2, Y2);
+            this.sideBC = GetTriangleSideLength(X2, Y2, X3, Y3);
+            this.sideCA = GetTriangleSideLength(X3, Y3, X1, Y1);
         }
+
+        public override string ToString()
+        {
+            return string.Join(", ", GetWidth(), GetHeight(), GetArea(), GetPerimeter());
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(obj, this))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null) || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            return GetHashCode() == ((Triangle)obj).GetHashCode();
+        }
+
+        public override int GetHashCode()
+        {
+            int prime = 17;
+            int hash = 1;
+            hash = prime * hash + (int)this.sideAB;
+            hash = prime * hash + (int)this.sideBC;
+            hash = prime * hash + (int)this.sideCA;
+            return hash;
+        }
+
 
         public double GetWidth()
         {
@@ -76,10 +155,6 @@ namespace ShapesTask
 
         public double GetArea()
         {
-            double sideAB = GetTriangleSideLength(X1, Y1, X2, Y2);
-            double sideBC = GetTriangleSideLength(X2, Y2, X3, Y3);
-            double sideCA = GetTriangleSideLength(X3, Y3, X1, Y1);
-
             double semiPerimeter = (sideAB + sideBC + sideCA) / 2;
 
             return Math.Sqrt(semiPerimeter * (semiPerimeter - sideAB) * (semiPerimeter - sideBC) * (semiPerimeter - sideCA));
@@ -87,10 +162,6 @@ namespace ShapesTask
 
         public double GetPerimeter()
         {
-            double sideAB = GetTriangleSideLength(X1, Y1, X2, Y2);
-            double sideBC = GetTriangleSideLength(X2, Y2, X3, Y3);
-            double sideCA = GetTriangleSideLength(X3, Y3, X1, Y1);
-
             return sideAB + sideBC + sideCA;
         }
     }
@@ -104,6 +175,35 @@ namespace ShapesTask
         {
             Width = sideLength1;
             Heigth = sideLength2;
+        }
+
+        public override string ToString()
+        {
+            return string.Join(",", GetWidth(), GetHeight(), GetArea(), GetPerimeter());
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(obj, this))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null) || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            return GetHashCode() == ((Rectangle)obj).GetHashCode();
+        }
+
+        public override int GetHashCode()
+        {
+            int prime = 17;
+            int hash = 1;
+            hash = prime * hash + (int)this.Width;
+            hash = prime * hash + (int)this.Heigth;
+            return hash;
         }
 
         public double GetWidth()
@@ -134,6 +234,34 @@ namespace ShapesTask
         public Circle(double radius)
         {
             Radius = radius;
+        }
+
+        public override string ToString()
+        {
+            return string.Join(",", GetWidth(), GetHeight(), GetArea(), GetPerimeter());
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(obj, this))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(obj, null) || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            return GetHashCode() == ((Circle)obj).GetHashCode();
+        }
+
+        public override int GetHashCode()
+        {
+            int prime = 17;
+            int hash = 1;
+            hash = prime * hash + (int)this.Radius;
+            return hash;
         }
 
         public double GetWidth()

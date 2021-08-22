@@ -3,7 +3,6 @@
     class Range
     {
         public double From { get; set; }
-
         public double To { get; set; }
 
         public Range(double from, double to)
@@ -26,9 +25,24 @@
         {
             if (this.From < rangeB.To && this.To > rangeB.From)
             {
-                Range intersection = new Range(rangeB.From, this.To);
+                if (this.To > rangeB.To)
+                {
+                    return new Range(rangeB.From, rangeB.To);
+                }
 
-                return intersection;
+                if (rangeB.To > this.To)
+                {
+                    return new Range(this.From, this.To);
+                }
+
+                double minValueFrom = this.From < rangeB.From ? this.From : rangeB.From;
+
+                if (minValueFrom == this.From)
+                {
+                    return new Range(rangeB.From, this.To);
+                }
+
+                return new Range(this.From, rangeB.To);
             }
 
             return null;
@@ -36,7 +50,7 @@
 
         public bool IsContinuousInterval(Range rangeB)
         {
-            if (this.To >= rangeB.From && this.From <= rangeB.To)
+            if (this.From <= rangeB.To && this.To >= rangeB.From)
             {
                 return true;
             }
@@ -46,12 +60,10 @@
 
         public Range GetCombination(Range rangeB)
         {
-            if (this.From <= rangeB.From)
-            {
-                return new Range(this.From, rangeB.To);
-            }
+            double minValueFrom = this.From < rangeB.From ? this.From : rangeB.From;
+            double maxValueTo = this.To > rangeB.To ? this.To : rangeB.To;
 
-            return new Range(rangeB.From, this.To);
+            return new Range(minValueFrom, maxValueTo);
         }
 
         public Range[] GetCombinationArray(Range rangeB)
@@ -75,15 +87,15 @@
 
         public Range GetDifference(Range rangeB)
         {
-            if (this.From < rangeB.To && this.To > rangeB.From)
+            if (this.GetLength() - rangeB.GetLength() > 0)
             {
                 double minValueFrom = this.From < rangeB.From ? this.From : rangeB.From;
                 if (minValueFrom == this.From)
                 {
-                    return new Range(rangeB.From, this.To);
+                    return new Range(this.From, rangeB.From);
                 }
 
-                return new Range(rangeB.To, this.To);
+                return new Range(rangeB.From, this.From);
             }
 
             return null;
@@ -93,8 +105,8 @@
         {
             Range[] differenceArray = new Range[2];
 
-            differenceArray[0] = new Range(this.From, rangeB.From);
-            differenceArray[1] = new Range(rangeB.To, this.To);
+            differenceArray[0] = new Range(this.From, rangeB.From - 1);
+            differenceArray[1] = new Range(rangeB.To + 1, this.To);
 
             return differenceArray;
         }

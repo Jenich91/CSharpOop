@@ -23,6 +23,11 @@ namespace AcademIT.Vyatkin
         {
             return shape.GetPerimeter();
         }
+
+        public string ToString(IShape shape)
+        {
+            return shape.ToString();
+        }
     }
 
     public class Square : IShape

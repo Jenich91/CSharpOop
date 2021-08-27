@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace AcademIT.Vyatkin
 {
@@ -59,7 +59,7 @@ namespace AcademIT.Vyatkin
 
             // Part_2______________________________________________
 
-            // Вводим числа диапазон
+            // Вводим числа первого диапазона
             Console.WriteLine("Введите число начало первого диапазона: ");
             double rangeStart1 = Convert.ToDouble(Console.ReadLine());
 
@@ -68,7 +68,7 @@ namespace AcademIT.Vyatkin
 
             Range interval1 = new Range(rangeStart1, rangeEnd1);
 
-            // Вводим числа второго диапазон
+            // Вводим числа второго диапазона
             Console.WriteLine("Введите число начало второго диапазона: ");
             double rangeStart2 = Convert.ToDouble(Console.ReadLine());
 
@@ -77,51 +77,65 @@ namespace AcademIT.Vyatkin
 
             Range interval2 = new Range(rangeStart2, rangeEnd2);
 
-            // Перечение
-            Range intersection = interval1.GetIntersection(interval2);
-            if (intersection != null)
+            if (rangeStart1 < rangeEnd1 || rangeStart2 < rangeEnd2)
             {
-                Console.WriteLine("Интервал пересечения двух интервалов: " + intersection.From + "-" + intersection.To);
-            }
-            else
-            {
-                Console.WriteLine("Пересечение двух интервалов отсутвует");
-            }
-
-            // Объединение
-            if (interval1.IsContinuousInterval(interval2))
-            {
-                Range сombination = interval1.GetCombination(interval2);
-                Console.WriteLine("Интервал объединения двух интервалов: " + сombination.From + "-" + сombination.To);
-            }
-            else
-            {
-                Range[] сombinationArray = interval1.GetCombinationArray(interval2);
-
-                Console.WriteLine("Первый интервал объединения двух интервалов: " + сombinationArray[0].From + "-" + сombinationArray[0].To);
-                Console.WriteLine("Второй интервал объединения двух интервалов: " + сombinationArray[1].From + "-" + сombinationArray[1].To);
-            }
-
-            // Разность
-            if (interval1.IsContinuousIntervalAfterDifference(interval2))
-            {
-                Range difference = interval1.GetDifference(interval2);
-
-                if (difference != null)
+                if (interval1.From != interval2.From && interval1.To != interval2.To)
                 {
-                    Console.WriteLine("Интервал разности двух интервалов: " + difference.From + "-" + difference.To);
+                    // Пересечение
+                    Range intersection = interval1.GetIntersection(interval2);
+                    if (intersection != null)
+                    {
+                        Console.WriteLine("Интервал пересечения двух интервалов: " + intersection.From + " - " + intersection.To);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Пересечение двух интервалов отсутвует");
+                    }
+
+                    // Объединение
+                    if (interval1.IsContinuousInterval(interval2))
+                    {
+                        Range сombination = interval1.GetCombination(interval2);
+                        Console.WriteLine("Интервал объединения двух интервалов: " + сombination.From + " - " + сombination.To);
+                    }
+                    else
+                    {
+                        Range[] сombinationArray = interval1.GetCombinationArray(interval2);
+
+                        Console.WriteLine("Первый интервал объединения двух интервалов: " + сombinationArray[0].From + " - " + сombinationArray[0].To);
+                        Console.WriteLine("Второй интервал объединения двух интервалов: " + сombinationArray[1].From + " - " + сombinationArray[1].To);
+                    }
+
+                    // Разность
+                    if (interval1.IsContinuousIntervalAfterDifference(interval2))
+                    {
+                        Range difference = interval1.GetDifference(interval2);
+
+                        if (difference != null)
+                        {
+                            Console.WriteLine("Интервал разности двух интервалов: " + difference.From + " - " + difference.To);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Разность двух интервалов отсутвует");
+                        }
+                    }
+                    else
+                    {
+                        Range[] differenceArray = interval1.GetDifferenceArray(interval2);
+
+                        Console.WriteLine("Первый интервал разности двух интервалов: " + differenceArray[0].From + " - " + differenceArray[0].To);
+                        Console.WriteLine("Второй интервал разности двух интервалов: " + differenceArray[1].From + " - " + differenceArray[1].To);
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Разность двух интервалов отсутвует");
+                    Console.WriteLine("Интервалы в одной точке, нечего считать");
                 }
             }
             else
             {
-                Range[] differenceArray = interval1.GetDifferenceArray(interval2);
-
-                Console.WriteLine("Первый интервал разности двух интервалов: " + differenceArray[0].From + "-" + differenceArray[0].To);
-                Console.WriteLine("Второй интервал разности двух интервалов: " + differenceArray[1].From + "-" + differenceArray[1].To);
+                Console.WriteLine("Неправильный ввод, начало интервала больше конца");
             }
         }
     }

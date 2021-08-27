@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace AcademIT.Vyatkin
 {
@@ -41,7 +41,7 @@ namespace AcademIT.Vyatkin
 
         public override string ToString()
         {
-            return string.Join(",", GetWidth(), GetHeight(), GetArea(), GetPerimeter());
+            return string.Join(", ", GetWidth(), GetHeight(), String.Format("{0:0.##}", GetArea()), String.Format("{0:0.##}", GetPerimeter()));
         }
 
         public override bool Equals(object obj)
@@ -114,7 +114,7 @@ namespace AcademIT.Vyatkin
 
         public override string ToString()
         {
-            return string.Join(", ", GetWidth(), GetHeight(), GetArea(), GetPerimeter());
+            return string.Join(", ", GetWidth(), GetHeight(), String.Format("{0:0.##}", GetArea()), String.Format("{0:0.##}", GetPerimeter()));
         }
 
         public override bool Equals(object obj)
@@ -184,7 +184,7 @@ namespace AcademIT.Vyatkin
 
         public override string ToString()
         {
-            return string.Join(",", GetWidth(), GetHeight(), GetArea(), GetPerimeter());
+            return string.Join(", ", GetWidth(), GetHeight(), String.Format("{0:0.##}", GetArea()), String.Format("{0:0.##}", GetPerimeter()));
         }
 
         public override bool Equals(object obj)
@@ -243,7 +243,7 @@ namespace AcademIT.Vyatkin
 
         public override string ToString()
         {
-            return string.Join(",", GetWidth(), GetHeight(), GetArea(), GetPerimeter());
+            return string.Join(", ", GetWidth(), GetHeight(), String.Format("{0:0.##}", GetArea()), String.Format("{0:0.##}", GetPerimeter()));
         }
 
         public override bool Equals(object obj)

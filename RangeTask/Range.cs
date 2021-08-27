@@ -1,4 +1,4 @@
-﻿namespace AcademIT.Vyatkin
+namespace AcademIT.Vyatkin
 {
     public class Range
     {
@@ -25,12 +25,12 @@
         {
             if (this.From < rangeB.To && this.To > rangeB.From)
             {
-                if (this.To > rangeB.To)
+                if (this.From < rangeB.From && this.To > rangeB.To)
                 {
                     return new Range(rangeB.From, rangeB.To);
                 }
 
-                if (rangeB.To > this.To)
+                if (rangeB.To > this.To && rangeB.From < this.From)
                 {
                     return new Range(this.From, this.To);
                 }
@@ -87,7 +87,7 @@
 
         public Range GetDifference(Range rangeB)
         {
-            if (this.GetLength() - rangeB.GetLength() > 0)
+            if (this.GetIntersection(rangeB) != null)
             {
                 double minValueFrom = this.From < rangeB.From ? this.From : rangeB.From;
                 if (minValueFrom == this.From)

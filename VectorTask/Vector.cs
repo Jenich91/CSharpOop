@@ -132,17 +132,17 @@ namespace VectorTask
             }
         }
 
-        public double Length()
+        public double GetLength()
         {
-            double result = 0;
+            double length = 0;
             int dimensionsNumber = this.GetSize();
 
             for (int i = 0; i < dimensionsNumber; i++)
             {
-                result += Math.Pow(this.componets[i], 2);
+                length += Math.Pow(this.componets[i], 2);
             }
 
-            return Math.Sqrt(result);
+            return Math.Sqrt(length);
         }
 
         public double this[int i]
@@ -157,6 +157,38 @@ namespace VectorTask
             }
         }
 
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(obj, this))
+            {
+                return true;
+            }
 
+            if (ReferenceEquals(obj, null) || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            Vector vector = (Vector)obj;
+
+            for (int i = 0; i < GetSize(); i++)
+            {
+                if (this[i] != vector[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            var hash = new HashCode();
+            hash.Add(this.N);
+            hash.Add(this.componets);
+
+            return hash.ToHashCode();
+        }
     }
 }

@@ -103,7 +103,46 @@ namespace VectorTask
 
                 // Разворот вектора
 
+                vector1.Reverse();
 
+                for (int i = 0; i < size; i++)
+                {
+                    array[i] *= -1;
+                }
+
+                testResult = GetTestResultMessage((vector1.ToString() == ("{" + string.Join(",", array) + "}")), 10);
+                Console.WriteLine(testResult);
+
+                // Получение длины вектора
+
+                vector1.GetLength();
+
+                double length = 0;
+
+                for (int i = 0; i < size; i++)
+                {
+                    length += Math.Pow(array[i], 2);
+                }
+
+                length = Math.Sqrt(length);
+
+                testResult = GetTestResultMessage((vector1.GetLength() == length), 11);
+                Console.WriteLine(testResult);
+
+                //  Получение и установка компоненты вектора по индексу
+
+                vector1[2] = 3;
+                double vectorComponent = vector1[2];
+
+                testResult = GetTestResultMessage((vector1[2] == vectorComponent), 12);
+                Console.WriteLine(testResult);
+
+                // Переопределить метод equals и hashCode
+
+                vector2 = new Vector(vector1);
+
+                testResult = GetTestResultMessage((vector1.Equals(vector2)), 13);
+                Console.WriteLine(testResult);
             }
 
             catch (Exception ex)

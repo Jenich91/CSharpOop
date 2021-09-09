@@ -22,83 +22,83 @@ namespace VectorTask
                 testResult = GetTestResultMessage(vector2.Equals(vector1), 2);
                 Console.WriteLine(testResult);
 
-                double[] array = { 3, 0, -10.4 };
-                vector1 = new Vector(array);
+                double[] array1 = { 3, 0, -10.4 };
+                vector1 = new Vector(array1);
 
-                testResult = GetTestResultMessage((vector1.componets[0] == array[0] && vector1.componets[1] == array[1] && vector1.componets[2] == array[2]), 3);
+                testResult = GetTestResultMessage((vector1.componets[0] == array1[0] && vector1.componets[1] == array1[1] && vector1.componets[2] == array1[2]), 3);
                 Console.WriteLine(testResult);
 
-                array = new double[] { 3.5, 45.53, 40.932 };
-                vector1 = new Vector(4, array);
+                array1 = new double[] { 3.5, 45.53, 40.932 };
+                vector1 = new Vector(4, array1);
 
-                testResult = GetTestResultMessage((vector1.componets[0] == array[0] && vector1.componets[1] == array[1] && vector1.componets[2] == array[2] && vector1.componets[3] == 0), 4);
+                testResult = GetTestResultMessage((vector1.componets[0] == array1[0] && vector1.componets[1] == array1[1] && vector1.componets[2] == array1[2] && vector1.componets[3] == 0), 4);
                 Console.WriteLine(testResult);
 
                 // Метод getSize()
 
-                array = new double[] { 5, 43, 32 };
-                vector1 = new Vector(array);
+                array1 = new double[] { 5, 43, 32 };
+                vector1 = new Vector(array1);
 
-                testResult = GetTestResultMessage((vector1.GetSize() == array.Length), 5);
+                testResult = GetTestResultMessage((vector1.GetSize() == array1.Length), 5);
                 Console.WriteLine(testResult);
 
                 // Метод toString()
 
-                array = new double[] { 0, 99, -1000, 2.0 };
-                vector1 = new Vector(array);
+                array1 = new double[] { 0, 99, -1000, 2.0 };
+                vector1 = new Vector(array1);
 
-                testResult = GetTestResultMessage((vector1.ToString() == ("{" + string.Join(",", array) + "}")), 6);
+                testResult = GetTestResultMessage((vector1.ToString() == ("{" + string.Join(",", array1) + "}")), 6);
                 Console.WriteLine(testResult);
 
-                // Тесты методов
+                // Тесты нестатических методов
 
                 // Прибавление к вектору другого вектора
 
-                array = new double[] { 20, 299, 0, 2.20 };
-                double[] array2 = new double[] { 3, 53.35, -5 };
+                array1 = new double[] { 20, 299, 0, 2.2 };
+                double[] array2 = new double[] { 3, 35, -5 };
 
-                vector1 = new Vector(array);
+                vector1 = new Vector(array1);
                 vector2 = new Vector(array2);
 
                 vector1.Addition(vector2);
 
-                int nMin = GetMinimalArrayLength(array, array2);
+                int nMin = GetMinimalArrayLength(array1, array2);
 
                 for (int i = 0; i < nMin; i++)
                 {
-                    array[i] += array2[i];
+                    array1[i] += array2[i];
                 }
 
-                testResult = GetTestResultMessage((vector1.ToString() == ("{" + string.Join(",", array) + "}")), 7);
+                testResult = GetTestResultMessage((vector1.ToString() == ("{" + string.Join(",", array1) + "}")), 7);
                 Console.WriteLine(testResult);
 
                 // Вычитание из вектора другого вектора
 
                 vector1.Subtraction(vector2);
 
-                nMin = GetMinimalArrayLength(array, array2);
+                nMin = GetMinimalArrayLength(array1, array2);
 
                 for (int i = 0; i < nMin; i++)
                 {
-                    array[i] -= array2[i];
+                    array1[i] -= array2[i];
                 }
 
-                testResult = GetTestResultMessage((vector1.ToString() == ("{" + string.Join(",", array) + "}")), 8);
+                testResult = GetTestResultMessage((vector1.ToString() == ("{" + string.Join(",", array1) + "}")), 8);
                 Console.WriteLine(testResult);
 
                 // Умножение вектора на скаляр
 
                 int scalarValue = 2;
-                vector1.Multiply(scalarValue);
+                vector1.ScalarMultiplication(scalarValue);
 
-                int size = array.Length;
+                int size = array1.Length;
 
                 for (int i = 0; i < size; i++)
                 {
-                    array[i] = array[i] * scalarValue;
+                    array1[i] = array1[i] * scalarValue;
                 }
 
-                testResult = GetTestResultMessage((vector1.ToString() == ("{" + string.Join(",", array) + "}")), 9);
+                testResult = GetTestResultMessage((vector1.ToString() == ("{" + string.Join(",", array1) + "}")), 9);
                 Console.WriteLine(testResult);
 
                 // Разворот вектора
@@ -107,10 +107,10 @@ namespace VectorTask
 
                 for (int i = 0; i < size; i++)
                 {
-                    array[i] *= -1;
+                    array1[i] *= -1;
                 }
 
-                testResult = GetTestResultMessage((vector1.ToString() == ("{" + string.Join(",", array) + "}")), 10);
+                testResult = GetTestResultMessage((vector1.ToString() == ("{" + string.Join(",", array1) + "}")), 10);
                 Console.WriteLine(testResult);
 
                 // Получение длины вектора
@@ -121,7 +121,7 @@ namespace VectorTask
 
                 for (int i = 0; i < size; i++)
                 {
-                    length += Math.Pow(array[i], 2);
+                    length += Math.Pow(array1[i], 2);
                 }
 
                 length = Math.Sqrt(length);
@@ -142,6 +142,58 @@ namespace VectorTask
                 vector2 = new Vector(vector1);
 
                 testResult = GetTestResultMessage((vector1.Equals(vector2)), 13);
+
+
+                // Тесты статических методов
+
+                // Сложение двух векторов
+
+                vector1 = new Vector(array1);
+                vector2 = new Vector(array2);
+                Vector vector3 = Vector.Summation(vector1, vector2);
+
+                nMin = GetMinimalArrayLength(array1, array2);
+
+                for (int i = 0; i < nMin; i++)
+                {
+                    array1[i] = array1[i] + array2[i];
+                }
+
+                testResult = GetTestResultMessage((vector3.ToString() == ("{" + string.Join(",", array1) + "}")), 14);
+                Console.WriteLine(testResult);
+
+                // Вычитание векторов
+
+                vector1 = new Vector(array1);
+                vector2 = new Vector(array2);
+                vector3 = Vector.Subtraction(vector1, vector2);
+
+                nMin = GetMinimalArrayLength(array1, array2);
+
+                for (int i = 0; i < nMin; i++)
+                {
+                    array1[i] = array1[i] - array2[i];
+                }
+
+                testResult = GetTestResultMessage((vector3.ToString() == ("{" + string.Join(",", array1) + "}")), 15);
+                Console.WriteLine(testResult);
+
+                // Скалярное произведение векторов
+
+                vector1 = new Vector(array1);
+                vector2 = new Vector(array2);
+
+                double scalarProduct1 = Vector.DotProduct(vector1, vector2);
+                double scalarProduct2 = 0;
+
+                nMin = GetMinimalArrayLength(array1, array2);
+
+                for (int i = 0; i < nMin; i++)
+                {
+                    scalarProduct2 += (array1[i] * array2[i]);
+                }
+
+                testResult = GetTestResultMessage((scalarProduct1 == scalarProduct2), 16);
                 Console.WriteLine(testResult);
             }
 

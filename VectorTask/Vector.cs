@@ -39,25 +39,25 @@ namespace VectorTask
             }
         }
 
-        public Vector(double[] vectors)
+        public Vector(double[] array)
         {
-            componets = new double[vectors.Length];
+            componets = new double[array.Length];
 
-            for (int i = 0; i < vectors.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                this.componets[i] = vectors[i];
+                this.componets[i] = array[i];
             }
         }
 
-        public Vector(int n, double[] vectors)
+        public Vector(int n, double[] array)
         {
             componets = new double[n];
 
-            int arraySize = vectors.Length;
+            int arraySize = array.Length;
 
             for (int i = 0; i < arraySize; i++)
             {
-                this.componets[i] = vectors[i];
+                this.componets[i] = array[i];
             }
 
             if (arraySize < n)
@@ -85,34 +85,35 @@ namespace VectorTask
             return "{" + string.Join(",", this.componets) + "}";
         }
 
-        public void Addition(Vector vectorB)
+        public void Addition(Vector otherVector)
         {
-            int nMin = GetMinimalArrayLength(this, vectorB);
+            int minimumVectorSize = GetMinimumVectorLength(this, otherVector);
 
-            for (int i = 0; i < nMin; i++)
+            for (int i = 0; i < minimumVectorSize; i++)
             {
-                this.componets[i] = this.componets[i] + vectorB.componets[i];
+                this.componets[i] = this.componets[i] + otherVector.componets[i];
             }
         }
 
-        public int GetMinimalArrayLength(Vector vectorA, Vector vectorB)
+        public int GetMinimumVectorLength(Vector vectorA, Vector vectorB)
         {
-            int nVectorA = vectorA.GetSize();
-            int nVectorB = vectorB.GetSize();
-            return nVectorA < nVectorB ? nVectorB : nVectorB;
+            int sizeVectorA = vectorA.GetSize();
+            int sizeVectorB = vectorB.GetSize();
+
+            return sizeVectorA <= sizeVectorB ? sizeVectorA : sizeVectorB;
         }
 
         public void Subtraction(Vector vectorB)
         {
-            int nMin = GetMinimalArrayLength(this, vectorB);
+            int minimumVectorSize = GetMinimumVectorLength(this, vectorB);
 
-            for (int i = 0; i < nMin; i++)
+            for (int i = 0; i < minimumVectorSize; i++)
             {
                 this.componets[i] = this.componets[i] - vectorB.componets[i];
             }
         }
 
-        public void Multiply(double scalarValue)
+        public void ScalarMultiplication(double scalarValue)
         {
             int dimensionsNumber = this.GetSize();
 
@@ -164,7 +165,7 @@ namespace VectorTask
                 return true;
             }
 
-            if (ReferenceEquals(obj, null) || GetType() != obj.GetType())
+            if (obj is null || GetType() != obj.GetType())
             {
                 return false;
             }
@@ -189,6 +190,112 @@ namespace VectorTask
             hash.Add(this.componets);
 
             return hash.ToHashCode();
+        }
+
+        public static Vector Summation(Vector vector1, Vector vector2)
+        {
+            int sizeVector1 = vector1.GetSize();
+            int sizeVector2 = vector2.GetSize();
+            int maxVectorSize = sizeVector1 > sizeVector2 ? sizeVector1 : sizeVector2;
+
+            Vector vectorResult = new Vector(maxVectorSize);
+
+            if (sizeVector1 < sizeVector2)
+            {
+                for (int i = 0; i < sizeVector1; i++)
+                {
+                    vectorResult[i] = vector1[i] + vector2[i];
+                }
+
+                for (int i = sizeVector1; i < sizeVector2; i++)
+                {
+                    vectorResult[i] = vector2[i] + 0;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < sizeVector2; i++)
+                {
+                    vectorResult[i] = vector1[i] + vector2[i];
+                }
+
+                for (int i = sizeVector2; i < sizeVector1; i++)
+                {
+                    vectorResult[i] = vector1[i] + 0;
+                }
+            }
+
+            return vectorResult;
+        }
+
+        public static Vector Subtraction(Vector vector1, Vector vector2)
+        {
+            int sizeVector1 = vector1.GetSize();
+            int sizeVector2 = vector2.GetSize();
+            int maxVectorSize = sizeVector1 > sizeVector2 ? sizeVector1 : sizeVector2;
+
+            Vector vectorResult = new Vector(maxVectorSize);
+
+            if (sizeVector1 < sizeVector2)
+            {
+                for (int i = 0; i < sizeVector1; i++)
+                {
+                    vectorResult[i] = vector1[i] - vector2[i];
+                }
+
+                for (int i = sizeVector1; i < sizeVector2; i++)
+                {
+                    vectorResult[i] = vector2[i] + 0;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < sizeVector2; i++)
+                {
+                    vectorResult[i] = vector1[i] - vector2[i];
+                }
+
+                for (int i = sizeVector2; i < sizeVector1; i++)
+                {
+                    vectorResult[i] = vector1[i] - 0;
+                }
+            }
+
+            return vectorResult;
+        }
+
+        public static double DotProduct(Vector vector1, Vector vector2)
+        {
+            int sizeVector1 = vector1.GetSize();
+            int sizeVector2 = vector2.GetSize();
+            double sum = 0;
+
+            if (sizeVector1 < sizeVector2)
+            {
+                for (int i = 0; i < sizeVector1; i++)
+                {
+                    sum += (vector1[i] * vector2[i]);
+                }
+
+                for (int i = sizeVector1; i < sizeVector2; i++)
+                {
+                    sum += (vector1[i] * 0);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < sizeVector2; i++)
+                {
+                    sum += (vector1[i] * vector2[i]);
+                }
+
+                for (int i = sizeVector2; i < sizeVector1; i++)
+                {
+                    sum += (vector1[i] * 0);
+                }
+            }
+
+            return sum;
         }
     }
 }

@@ -1,8 +1,9 @@
-namespace AcademIT.Vyatkin
+namespace RangeTask
 {
     public class Range
     {
         public double From { get; set; }
+
         public double To { get; set; }
 
         public Range(double from, double to)
@@ -21,36 +22,36 @@ namespace AcademIT.Vyatkin
             return number >= From && number <= To;
         }
 
-        public Range GetIntersection(Range rangeB)
+        public Range GetIntersection(Range range)
         {
-            if (this.From < rangeB.To && this.To > rangeB.From)
+            if (From < range.To && To > range.From)
             {
-                if (this.From < rangeB.From && this.To > rangeB.To)
+                if (From < range.From && To > range.To)
                 {
-                    return new Range(rangeB.From, rangeB.To);
+                    return new Range(range.From, range.To);
                 }
 
-                if (rangeB.To > this.To && rangeB.From < this.From)
+                if (range.To > To && range.From < From)
                 {
-                    return new Range(this.From, this.To);
+                    return new Range(From, To);
                 }
 
-                double minValueFrom = this.From < rangeB.From ? this.From : rangeB.From;
+                double minValueFrom = From < range.From ? From : range.From;
 
-                if (minValueFrom == this.From)
+                if (minValueFrom == From)
                 {
-                    return new Range(rangeB.From, this.To);
+                    return new Range(range.From, To);
                 }
 
-                return new Range(this.From, rangeB.To);
+                return new Range(From, range.To);
             }
 
             return null;
         }
 
-        public bool IsContinuousInterval(Range rangeB)
+        public bool IsContinuousInterval(Range range)
         {
-            if (this.From <= rangeB.To && this.To >= rangeB.From)
+            if (From <= range.To && To >= range.From)
             {
                 return true;
             }
@@ -58,26 +59,32 @@ namespace AcademIT.Vyatkin
             return false;
         }
 
-        public Range GetCombination(Range rangeB)
+        public Range[] GetUnion(Range range)
         {
-            double minValueFrom = this.From < rangeB.From ? this.From : rangeB.From;
-            double maxValueTo = this.To > rangeB.To ? this.To : rangeB.To;
+            Range[] unionArray;
 
-            return new Range(minValueFrom, maxValueTo);
+            if (From <= range.To && To >= range.From)
+            {
+                unionArray = new Range[0];
+
+                double minFrom = From < range.From ? From : range.From;
+                double maxTo = To > range.To ? To : range.To;
+                unionArray[0] = new Range(minFrom, maxTo);
+
+                return unionArray;
+            }
+
+            unionArray = new Range[2];
+
+            unionArray[0] = new Range(From, To);
+            unionArray[1] = new Range(range.From, range.To);
+
+            return unionArray;
         }
 
-        public Range[] GetCombinationArray(Range rangeB)
+        public bool IsContinuousIntervalAfterDifference(Range range)
         {
-            Range[] сombinationArray = new Range[2];
-
-            сombinationArray[0] = new Range(this.From, this.To);
-            сombinationArray[1] = new Range(rangeB.From, rangeB.To);
-
-            return сombinationArray;
-        }
-        public bool IsContinuousIntervalAfterDifference(Range rangeB)
-        {
-            if (rangeB.From < this.From || rangeB.To > this.To)
+            if (range.From < From || range.To > To)
             {
                 return true;
             }
@@ -85,28 +92,32 @@ namespace AcademIT.Vyatkin
             return false;
         }
 
-        public Range GetDifference(Range rangeB)
+        public Range[] GetDifferenceArray(Range range)
         {
-            if (this.GetIntersection(rangeB) != null)
+            Range[] differenceArray = new Range[0];
+
+            if (range.From < From || range.To > To)
             {
-                double minValueFrom = this.From < rangeB.From ? this.From : rangeB.From;
-                if (minValueFrom == this.From)
+                if (GetIntersection(range) != null)
                 {
-                    return new Range(this.From, rangeB.From);
+                    double minValueFrom = From < range.From ? From : range.From;
+                    if (minValueFrom == From)
+                    {
+                        differenceArray[0] = new Range(From, range.From);
+                        return differenceArray;
+                    }
+
+                    differenceArray[0] = new Range(range.From, From);
+                    return differenceArray;
                 }
 
-                return new Range(rangeB.From, this.From);
+                return null;
             }
 
-            return null;
-        }
+            differenceArray = new Range[2];
 
-        public Range[] GetDifferenceArray(Range rangeB)
-        {
-            Range[] differenceArray = new Range[2];
-
-            differenceArray[0] = new Range(this.From, rangeB.From - 1);
-            differenceArray[1] = new Range(rangeB.To + 1, this.To);
+            differenceArray[0] = new Range(From, range.From - 1);
+            differenceArray[1] = new Range(range.To + 1, To);
 
             return differenceArray;
         }

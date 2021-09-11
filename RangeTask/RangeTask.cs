@@ -1,6 +1,6 @@
 using System;
 
-namespace AcademIT.Vyatkin
+namespace RangeTask
 {
     class RangeTask
     {
@@ -83,6 +83,7 @@ namespace AcademIT.Vyatkin
                 {
                     // Пересечение
                     Range intersection = interval1.GetIntersection(interval2);
+
                     if (intersection != null)
                     {
                         Console.WriteLine("Интервал пересечения двух интервалов: " + intersection.From + " - " + intersection.To);
@@ -93,40 +94,31 @@ namespace AcademIT.Vyatkin
                     }
 
                     // Объединение
-                    if (interval1.IsContinuousInterval(interval2))
-                    {
-                        Range сombination = interval1.GetCombination(interval2);
-                        Console.WriteLine("Интервал объединения двух интервалов: " + сombination.From + " - " + сombination.To);
-                    }
-                    else
-                    {
-                        Range[] сombinationArray = interval1.GetCombinationArray(interval2);
 
-                        Console.WriteLine("Первый интервал объединения двух интервалов: " + сombinationArray[0].From + " - " + сombinationArray[0].To);
-                        Console.WriteLine("Второй интервал объединения двух интервалов: " + сombinationArray[1].From + " - " + сombinationArray[1].To);
+                    Range[] union = interval1.GetUnion(interval2);
+
+                    Console.WriteLine("Интервал объединения двух интервалов: ");
+                    foreach (Range rangeObj in union)
+                    {
+                        Console.WriteLine(String.Join(", ", rangeObj));
                     }
 
                     // Разность
-                    if (interval1.IsContinuousIntervalAfterDifference(interval2))
-                    {
-                        Range difference = interval1.GetDifference(interval2);
+                    Range[] difference = interval1.GetDifferenceArray(interval2);
 
-                        if (difference != null)
+                    if (difference != null)
+                    {
+                        Console.WriteLine("Интервал разности двух интервалов: ");
+                        foreach (Range rangeObj in difference)
                         {
-                            Console.WriteLine("Интервал разности двух интервалов: " + difference.From + " - " + difference.To);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Разность двух интервалов отсутвует");
+                            Console.WriteLine(String.Join(", ", rangeObj));
                         }
                     }
                     else
                     {
-                        Range[] differenceArray = interval1.GetDifferenceArray(interval2);
-
-                        Console.WriteLine("Первый интервал разности двух интервалов: " + differenceArray[0].From + " - " + differenceArray[0].To);
-                        Console.WriteLine("Второй интервал разности двух интервалов: " + differenceArray[1].From + " - " + differenceArray[1].To);
+                        Console.WriteLine("Разность двух интервалов отсутвует");
                     }
+                    
                 }
                 else
                 {

@@ -87,7 +87,7 @@ namespace VectorTask
 
         public void Addition(Vector otherVector)
         {
-            int minimumVectorSize = GetMinimumVectorLength(this, otherVector);
+            int minimumVectorSize = Math.Min(this.GetSize(), otherVector.GetSize());
 
             for (int i = 0; i < minimumVectorSize; i++)
             {
@@ -103,13 +103,13 @@ namespace VectorTask
             return sizeVectorA <= sizeVectorB ? sizeVectorA : sizeVectorB;
         }
 
-        public void Subtraction(Vector vectorB)
+        public void Subtraction(Vector otherVector)
         {
-            int minimumVectorSize = GetMinimumVectorLength(this, vectorB);
+            int minimumVectorSize = Math.Min(this.GetSize(), otherVector.GetSize());
 
             for (int i = 0; i < minimumVectorSize; i++)
             {
-                this.componets[i] = this.componets[i] - vectorB.componets[i];
+                this.componets[i] = this.componets[i] - otherVector.componets[i];
             }
         }
 
@@ -196,9 +196,7 @@ namespace VectorTask
         {
             int sizeVector1 = vector1.GetSize();
             int sizeVector2 = vector2.GetSize();
-            int maxVectorSize = sizeVector1 > sizeVector2 ? sizeVector1 : sizeVector2;
-
-            Vector vectorResult = new Vector(maxVectorSize);
+            Vector vectorResult = new Vector(Math.Max(sizeVector1, sizeVector2));
 
             if (sizeVector1 < sizeVector2)
             {
@@ -232,9 +230,7 @@ namespace VectorTask
         {
             int sizeVector1 = vector1.GetSize();
             int sizeVector2 = vector2.GetSize();
-            int maxVectorSize = sizeVector1 > sizeVector2 ? sizeVector1 : sizeVector2;
-
-            Vector vectorResult = new Vector(maxVectorSize);
+            Vector vectorResult = new Vector(Math.Max(sizeVector1, sizeVector2));
 
             if (sizeVector1 < sizeVector2)
             {

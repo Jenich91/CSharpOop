@@ -1,3 +1,5 @@
+using System;
+
 namespace RangeTask
 {
     public class Range
@@ -36,9 +38,7 @@ namespace RangeTask
                     return new Range(From, To);
                 }
 
-                double minValueFrom = From < range.From ? From : range.From;
-
-                if (minValueFrom == From)
+                if (Math.Min(From, range.From) == From)
                 {
                     return new Range(range.From, To);
                 }
@@ -49,77 +49,54 @@ namespace RangeTask
             return null;
         }
 
-        public bool IsContinuousInterval(Range range)
-        {
-            if (From <= range.To && To >= range.From)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         public Range[] GetUnion(Range range)
         {
-            Range[] unionArray;
-
             if (From <= range.To && To >= range.From)
             {
-                unionArray = new Range[0];
-
-                double minFrom = From < range.From ? From : range.From;
-                double maxTo = To > range.To ? To : range.To;
-                unionArray[0] = new Range(minFrom, maxTo);
-
-                return unionArray;
+                return new Range[] { new Range(Math.Min(From, range.From), Math.Max(To, range.To)) };
             }
 
-            unionArray = new Range[2];
-
-            unionArray[0] = new Range(From, To);
-            unionArray[1] = new Range(range.From, range.To);
-
-            return unionArray;
+            return new Range[] { new Range(From, To), new Range(range.From, range.To) };
         }
 
-        public bool IsContinuousIntervalAfterDifference(Range range)
+        public Range[] GetDifference(Range range)
         {
-            if (range.From < From || range.To > To)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public Range[] GetDifferenceArray(Range range)
-        {
-            Range[] differenceArray = new Range[0];
-
             if (range.From < From || range.To > To)
             {
                 if (GetIntersection(range) != null)
                 {
-                    double minValueFrom = From < range.From ? From : range.From;
-                    if (minValueFrom == From)
+                    if (Math.Min(From, range.From) == From)
                     {
-                        differenceArray[0] = new Range(From, range.From);
-                        return differenceArray;
+                        return new Range[] { new Range(From, range.From) };
                     }
 
-                    differenceArray[0] = new Range(range.From, From);
-                    return differenceArray;
+                    return new Range[] { new Range(range.From, From) };
                 }
 
                 return null;
             }
 
-            differenceArray = new Range[2];
+            return new Range[] { new Range(From, range.From), new Range(range.To, To) };
+        }
 
-            differenceArray[0] = new Range(From, range.From - 1);
-            differenceArray[1] = new Range(range.To + 1, To);
+        public override string ToString()
+        {
+            return $"({From};{To})";
+        }
 
-            return differenceArray;
+        public static double FindDistanceBetweenRanges(Range range1, Range range2)
+        {
+            if (range1.GetIntersection(range2) == null)
+            {
+                if (Math.Min(range1.From, range2.From) == range1.From)
+                {
+                    return Math.Min(range2.From - range1.To, range2.To - range1.From);
+                }
+
+                return Math.Min(range1.From - range2.To, range1.To - range2.From);
+            }
+
+            return 0;
         }
     }
 }

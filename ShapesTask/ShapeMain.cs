@@ -1,8 +1,9 @@
-﻿using System;
+﻿using ShapesTask.Shapes;
+using System;
 
-namespace AcademIT.Vyatkin
+namespace ShapesTask
 {
-    class ShapeTask
+    class ShapeMain
     {
         static int FindShapeWithMaximumArea(IShape[] shapes)
         {

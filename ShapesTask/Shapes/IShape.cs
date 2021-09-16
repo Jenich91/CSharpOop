@@ -1,4 +1,4 @@
-﻿namespace AcademIT.Vyatkin
+﻿namespace ShapesTask
 {
     public interface IShape
     {
@@ -6,7 +6,5 @@
         double GetHeight();
         double GetArea();
         double GetPerimeter();
-
-        string ToString();
     }
 }

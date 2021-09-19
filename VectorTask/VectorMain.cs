@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace VectorTask
+namespace VectorMain
 {
-    class VectorTask
+    class VectorMain
     {
         static void Main(string[] args)
         {

@@ -78,13 +78,13 @@ namespace ShapesTask.Shapes
 
         public double GetArea()
         {
-            double sideLength1 = GetSideLength(X1, Y1, X2, Y2);
-            double sideLength2 = GetSideLength(X2, Y2, X3, Y3);
-            double sideLength3 = GetSideLength(X3, Y3, X1, Y1);
+            double side1Length = GetSideLength(X1, Y1, X2, Y2);
+            double side2Length = GetSideLength(X2, Y2, X3, Y3);
+            double side3Length = GetSideLength(X3, Y3, X1, Y1);
 
-            double semiPerimeter = (sideLength1 + sideLength2 + sideLength3) / 2;
+            double semiPerimeter = (side1Length + side2Length + side3Length) / 2;
 
-            return Math.Sqrt(semiPerimeter * (semiPerimeter - sideLength1) * (semiPerimeter - sideLength2) * (semiPerimeter - sideLength3));
+            return Math.Sqrt(semiPerimeter * (semiPerimeter - side1Length) * (semiPerimeter - side2Length) * (semiPerimeter - side3Length));
         }
 
         public double GetPerimeter()

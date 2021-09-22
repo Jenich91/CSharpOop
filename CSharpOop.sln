@@ -6,7 +6,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RangeTask", "RangeTask\Rang
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapesTask", "ShapesTask\ShapesTask.csproj", "{29957437-A51F-4BA0-8A3B-EDB6CCF27A2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorTask", "VectorTask\VectorTask.csproj", "{E539ABA3-BD53-4F0F-9CEB-E401D849F51B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorTask", "VectorTask\VectorTask.csproj", "{E539ABA3-BD53-4F0F-9CEB-E401D849F51B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListTask", "ListTask\ListTask.csproj", "{75434E11-D8B3-4EFA-99D5-53334883A454}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayListHomeTask", "ArrayListHomeTask\ArrayListHomeTask.csproj", "{BD6E9036-2ADF-4121-A416-D507EA63F5D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +30,14 @@ Global
 		{E539ABA3-BD53-4F0F-9CEB-E401D849F51B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E539ABA3-BD53-4F0F-9CEB-E401D849F51B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E539ABA3-BD53-4F0F-9CEB-E401D849F51B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75434E11-D8B3-4EFA-99D5-53334883A454}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75434E11-D8B3-4EFA-99D5-53334883A454}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75434E11-D8B3-4EFA-99D5-53334883A454}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75434E11-D8B3-4EFA-99D5-53334883A454}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD6E9036-2ADF-4121-A416-D507EA63F5D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD6E9036-2ADF-4121-A416-D507EA63F5D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD6E9036-2ADF-4121-A416-D507EA63F5D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD6E9036-2ADF-4121-A416-D507EA63F5D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

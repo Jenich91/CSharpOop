@@ -8,6 +8,9 @@ namespace MyListTask
     {
         private T[] items = new T[10];
         private int length;
+        private bool isReadOnly;
+
+        public bool IsReadOnly { get => isReadOnly; set => isReadOnly = value; }
 
         public int Count
         {
@@ -34,14 +37,14 @@ namespace MyListTask
             }
         }
 
-        public void Add(T obj)
+        public void Add(T item)
         {
             if (length >= items.Length)
             {
                 IncreaseCapacity();
             }
 
-            items[length] = obj;
+            items[length] = item;
             length++;
         }
 
@@ -85,14 +88,9 @@ namespace MyListTask
             return -1;
         }
 
-        public void Insert(int index, T item)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Clear()
         {
-            for (int i = 0; i < items.Length - 1; i++)
+            for (int i = 0; i < length - 1; i++)
             {
                 items[i] = default;
             }
@@ -141,11 +139,11 @@ namespace MyListTask
         {
             if (Contains(item))
             {
-                int indexDeletedItem = IndexOf(item);
+                int indexOfItem = IndexOf(item);
 
-                for (int i = indexDeletedItem; i < items.Length - 1; i++)
+                for (int i = indexOfItem; i < length - 1; i++)
                 {
-                    items[i] = items[++i];
+                    items[i] = items[i + 1];
                 }
 
                 --length;
@@ -154,6 +152,16 @@ namespace MyListTask
             }
 
             return false;
+        }
+
+        public void Insert(int index, T item)
+        {
+            IsIndexInRange(index);
+
+            T[] old = items;
+            RemoveAt(index - 1);
+            Add(item);
+            Array.Copy(old, index + 1, items, index + 1, length - 1);
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -168,7 +176,5 @@ namespace MyListTask
         {
             return GetEnumerator();
         }
-
-        public bool IsReadOnly => throw new NotImplementedException();
     }
 }

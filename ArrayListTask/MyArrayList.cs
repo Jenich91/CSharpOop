@@ -7,16 +7,38 @@ namespace MyListTask
     public class MyArrayList<T> : IList<T>
     {
         private T[] items = new T[10];
-        private int length;
-        private bool isReadOnly;
 
-        public bool IsReadOnly { get => isReadOnly; set => isReadOnly = value; }
+        public int Count { get; private set; }
 
-        public int Count
+        private int capacity;
+        public int Capacity
         {
             get
             {
-                return length;
+                return capacity;
+            }
+            private set
+            {
+                if (value > 0)
+                {
+                    capacity = value;
+                }
+            }
+        }
+
+        public bool IsReadOnly { get; }
+
+        public MyArrayList()
+        {
+        }
+
+        public MyArrayList(int capacity)
+        {
+            Capacity = capacity;
+
+            if (capacity >= items.Length)
+            {
+                IncreaseCapacity();
             }
         }
 
@@ -37,15 +59,26 @@ namespace MyListTask
             }
         }
 
+        public void TrimExcess()
+        {
+            if (Count < (items.Length * 0.9))
+            {
+                T[] old = items;
+                items = new T[Count];
+                Array.Copy(old, items, Count);
+                Capacity = items.Length;
+            }
+        }
+
         public void Add(T item)
         {
-            if (length >= items.Length)
+            if (Count >= Capacity)
             {
                 IncreaseCapacity();
             }
 
-            items[length] = item;
-            length++;
+            items[Count] = item;
+            Count++;
         }
 
         private void IncreaseCapacity()
@@ -57,9 +90,9 @@ namespace MyListTask
 
         private bool IsIndexInRange(int index)
         {
-            if (index < 0 || index > length - 1)
+            if (index < 0 || index >= Count)
             {
-                throw new IndexOutOfRangeException("index меньше нижней границы массива");
+                throw new IndexOutOfRangeException("Индекс вне границ массива");
             }
 
             return true;
@@ -77,7 +110,7 @@ namespace MyListTask
 
         public int IndexOf(T item)
         {
-            for (int i = 0; i < length - 1; i++)
+            for (int i = 0; i < Count; i++)
             {
                 if (items[i].Equals(item))
                 {
@@ -90,10 +123,12 @@ namespace MyListTask
 
         public void Clear()
         {
-            for (int i = 0; i < length - 1; i++)
+            for (int i = 0; i < Count; i++)
             {
                 items[i] = default;
             }
+
+            Count = 0;
         }
 
         public bool Contains(T item)
@@ -111,42 +146,43 @@ namespace MyListTask
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            IsArrayNotNull(array);
+            IsArrayNotNull(items);
 
             IsIndexInRange(arrayIndex);
 
-            if (length - arrayIndex > array.Length)
+            if (Count - arrayIndex > array.Length)
             {
                 throw new ArgumentException("Число элементов в исходном массиве больше числа элементов, которые может содержать массив назначения");
             }
 
-            Array.Copy(items, array, arrayIndex);
+            for (int i = 0; i < Count; i++)
+            {
+                array[i] = items[i];
+            }
         }
 
         public void RemoveAt(int index)
         {
             IsIndexInRange(index);
 
-            if (index < length - 1)
+            if (index < Count)
             {
-                Array.Copy(items, index + 1, items, index, length - index - 1);
+                Array.Copy(items, index + 1, items, index, Count - index - 1);
             }
 
-            --length;
+            --Count;
         }
 
         public bool Remove(T item)
         {
             if (Contains(item))
             {
-                int indexOfItem = IndexOf(item);
-
-                for (int i = indexOfItem; i < length - 1; i++)
+                for (int i = IndexOf(item); i < Count; i++)
                 {
                     items[i] = items[i + 1];
                 }
 
-                --length;
+                --Count;
 
                 return true;
             }
@@ -158,15 +194,20 @@ namespace MyListTask
         {
             IsIndexInRange(index);
 
-            T[] old = items;
-            RemoveAt(index - 1);
-            Add(item);
-            Array.Copy(old, index + 1, items, index + 1, length - 1);
+            if (Count >= Capacity)
+            {
+                IncreaseCapacity();
+            }
+
+            Count++;
+
+            Array.Copy(items, index, items, index + 1, Count);
+            items[index] = item;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            for (int i = 0; i < length - 1; i++)
+            for (int i = 0; i < Count; i++)
             {
                 yield return items[i];
             }

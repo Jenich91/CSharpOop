@@ -2,7 +2,7 @@
 
 namespace ListTask
 {
-    class ListMain
+    class LinkedListMain
     {
         static void Main(string[] args)
         {

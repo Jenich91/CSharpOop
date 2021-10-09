@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorTask", "VectorTask\Ve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArrayListHomeTask", "ArrayListHomeTask\ArrayListHomeTask.csproj", "{BD6E9036-2ADF-4121-A416-D507EA63F5D8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LamdaTask", "LamdaTask\LamdaTask.csproj", "{7370A320-F4DF-47A5-AFAE-1836913E80C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LambdaTask", "LamdaTask\LambdaTask.csproj", "{7370A320-F4DF-47A5-AFAE-1836913E80C3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArrayListTask", "ArrayListTask\ArrayListTask.csproj", "{2A628D4F-5814-463C-813A-DA3D6876D401}"
 EndProject

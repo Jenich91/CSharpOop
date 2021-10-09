@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LamdaTask
 {
-    class LamdaMain
+    class LambdaMain
     {
         static void Main(string[] args)
         {

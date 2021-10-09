@@ -1,4 +1,6 @@
-﻿namespace ListTask
+﻿using System;
+
+namespace ListTask
 {
     public class SinglyLinkedList
     {
@@ -9,12 +11,12 @@
         {
         }
 
-        public int GetListSize(SinglyLinkedList list)
+        public int GetListSize()
         {
             return count;
         }
 
-        T GetFirstValue(SinglyLinkedList list)
+        public Object GetFirstValue()
         {
             if (count != 0)
             {
@@ -24,35 +26,71 @@
             return null;
         }
 
-        public T this[int index]
+        public Object this[int index]
         {
             get
             {
-                ListItem<T> temp = head;
-
-                int i = 0;
-                while (i != index)
+                if (index < 0 || index > this.count - 1)
                 {
-                    temp = temp.Next;
-                    i++;
+                    throw new ArgumentOutOfRangeException("Значение аргумента не соответствует допустимому диапазону значений" + index);
                 }
 
-                return temp.Data;
-            }
+                ListItem<T> currentItem = head;
 
+                for (int i = 0; i < index; i++)
+                {
+                    if (currentItem.Next == null)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+
+                    currentItem = currentItem.Next;
+                }
+
+                return currentItem.Data;
+            }
             set
             {
-                ListItem<T> temp = head;
-
-                int i = 0;
-                while (i != index)
+                if (index < 0 || index > this.count - 1)
                 {
-                    temp = temp.Next;
-                    i++;
+                    throw new ArgumentOutOfRangeException("Значение аргумента не соответствует допустимому диапазону значений" + index);
                 }
 
-                temp.Data = value;
+                ListItem<T> currentItem = head;
+
+                for (int i = 0; i < index; i++)
+                {
+                    currentItem = currentItem.Next;
+                }
+
+                Console.WriteLine("Cтарое значение по индексу " + index + ": " + currentItem.Data);
+
+                currentItem.Data = (T)value;
             }
+        }
+
+        public void RemoveItem(int index)
+        {
+            if (index < 0 || index > this.count - 1)
+            {
+                throw new ArgumentOutOfRangeException("Значение аргумента не соответствует допустимому диапазону значений" + index);
+            }
+
+            ListItem<T> currentItem = head;
+
+            if (index == 0)
+            {
+
+            }
+
+            for (int i = 0; i < index; i++)
+            {
+                currentItem = currentItem.Next;
+            }
+
+            Console.WriteLine("Значение удаленного элемента по индексу " + index + ": " + currentItem.Data);
+
+            currentItem.Data = (T)value;
         }
     }
 }

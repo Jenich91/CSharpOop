@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LamdaTask
+namespace LambdaTask
 {
     class LambdaMain
     {

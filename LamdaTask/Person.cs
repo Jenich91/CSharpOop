@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LamdaTask
+namespace LambdaTask
 {
     public class Person : IEquatable<Person>
     {

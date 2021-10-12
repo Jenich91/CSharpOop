@@ -2,22 +2,27 @@
 
 namespace ListTask
 {
-    public class ListItem<T>
+    public class Item<T>
     {
         public T Data { get; set; }
 
-        public ListItem<T> Next { get; set; }
+        public Item<T> Next { get; set; }
 
-        public ListItem(T data)
+        public Item(T data)
         {
             IsArgumentNotNull(data);
 
             Data = data;
         }
-
-        public ListItem(T data, ListItem<T> next)
+        
+        public Item(T data, Item<T> next)
         {
             IsArgumentNotNull(data);
+
+            if (next == null)
+            {
+                throw new ArgumentNullException("Аргумент " + nameof(next) + " имеет значение null");
+            }
 
             Data = data;
             Next = next;

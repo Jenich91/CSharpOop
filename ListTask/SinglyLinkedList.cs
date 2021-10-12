@@ -1,41 +1,48 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace ListTask
 {
-    public class SinglyLinkedList
+    public class LinkedList<T> : IEnumerable<T>
     {
-        private ListItem<T> head;
-        private int count;
+        public Item<T> Head { get; private set; }
 
-        public SinglyLinkedList()
+        public int Count { get; private set; }
+
+        public LinkedList()
         {
+            Head = null;
+            Count = 0;
+        }
+
+        public LinkedList(T data)
+        {
+            var item = new Item<T>(data);
+            Head = item;
+            Count = 1;
         }
 
         public int GetListSize()
         {
-            return count;
+            return Count;
         }
 
-        public Object GetFirstValue()
+        public T GetFirstValue()
         {
-            if (count != 0)
-            {
-                return head.Data;
-            }
-
-            return null;
+            return Head.Data;
         }
 
-        public Object this[int index]
+        public T this[int index]
         {
             get
             {
-                if (index < 0 || index > this.count - 1)
+                if (index < 0 || index > this.Count - 1)
                 {
                     throw new ArgumentOutOfRangeException("Значение аргумента не соответствует допустимому диапазону значений" + index);
                 }
 
-                ListItem<T> currentItem = head;
+                Item<T> currentItem = Head;
 
                 for (int i = 0; i < index; i++)
                 {
@@ -51,12 +58,12 @@ namespace ListTask
             }
             set
             {
-                if (index < 0 || index > this.count - 1)
+                if (index < 0 || index > this.Count - 1)
                 {
                     throw new ArgumentOutOfRangeException("Значение аргумента не соответствует допустимому диапазону значений" + index);
                 }
 
-                ListItem<T> currentItem = head;
+                Item<T> currentItem = Head;
 
                 for (int i = 0; i < index; i++)
                 {
@@ -65,23 +72,25 @@ namespace ListTask
 
                 Console.WriteLine("Cтарое значение по индексу " + index + ": " + currentItem.Data);
 
-                currentItem.Data = (T)value;
+                currentItem.Data = value;
             }
         }
 
-        public void RemoveItem(int index)
+        public void Remove(int index)
         {
-            if (index < 0 || index > this.count - 1)
+            if (index < 0 || index > this.Count - 1)
             {
                 throw new ArgumentOutOfRangeException("Значение аргумента не соответствует допустимому диапазону значений" + index);
             }
 
-            ListItem<T> currentItem = head;
-
             if (index == 0)
             {
-
+                RemoveFirst();
+                Count--;
+                return;
             }
+
+            Item<T> currentItem = Head;
 
             for (int i = 0; i < index; i++)
             {
@@ -89,8 +98,82 @@ namespace ListTask
             }
 
             Console.WriteLine("Значение удаленного элемента по индексу " + index + ": " + currentItem.Data);
+        }
 
-            currentItem.Data = (T)value;
+        public void InsertFirst(T data)
+        {
+            var newitem = new Item<T>(data, Head);
+            Head = newitem;
+
+            Count++;
+        }
+
+        public void Insert(T data, int index)
+        {
+            if (index < 0 || index > Count - 1)
+            {
+                throw new ArgumentOutOfRangeException("Значение аргумента не соответствует допустимому диапазону значений" + index);
+            }
+
+            if (index == 0)
+            {
+                InsertFirst(data);
+            }
+
+            int indexCount = 0;
+            for (Item<T> item = Head; indexCount < index; item = item.Next, indexCount++)
+            {
+                var newItem = new Item<T>(data, item.Next);
+                item.Next = newItem;
+
+                Count++;
+            }
+        }
+
+
+
+        public T RemoveFirst()
+        {
+            T oldValue = Head.Data;
+
+            Head = Head.Next;
+
+            Count--;
+
+            return oldValue;
+        }
+
+        public bool RemoveByValue(T data)
+        {
+            int indexCount = 0;
+            for (Item<T> item = Head; item != null; item = item.Next, indexCount++)
+            {
+                if (item.Data.Equals(data))
+                {
+                    Remove(indexCount);
+                    Count--;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            var current = Head;
+
+            while (current != null)
+            {
+                yield return current.Data;
+                current = current.Next;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)this).GetEnumerator();
         }
     }
 }

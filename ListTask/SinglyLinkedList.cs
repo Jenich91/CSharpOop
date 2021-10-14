@@ -8,6 +8,8 @@ namespace ListTask
     {
         public Item<T> Head { get; private set; }
 
+        public Item<T> Tail { get; private set; }
+
         public int Count { get; private set; }
 
         public LinkedList()
@@ -130,19 +132,6 @@ namespace ListTask
             }
         }
 
-
-
-        public T RemoveFirst()
-        {
-            T oldValue = Head.Data;
-
-            Head = Head.Next;
-
-            Count--;
-
-            return oldValue;
-        }
-
         public bool RemoveByValue(T data)
         {
             int indexCount = 0;
@@ -159,6 +148,42 @@ namespace ListTask
             return false;
         }
 
+        public T RemoveFirst()
+        {
+            T oldValue = Head.Data;
+
+            Head = Head.Next;
+
+            Count--;
+
+            return oldValue;
+        }
+
+        public void Reverse()
+        {
+            for (Item<T> currentItem = Head, previosItem = null;
+                currentItem != null;
+                previosItem = currentItem, currentItem = currentItem.Next)
+            {
+                Item<T> nextItem = currentItem.Next;
+                currentItem.Next = previosItem;
+                previosItem = currentItem;
+                currentItem = nextItem;
+            }
+        }
+
+        public void CopyTo(LinkedList<T> anotherList)
+        {
+            if (anotherList == null)
+            {
+                throw new ArgumentNullException("Аргумент " + nameof(anotherList) + " имеет значение null");
+            }
+
+            for (Item<T> item = Head; item != null; item = item.Next)
+            {
+                anotherList.Insert(item.Data, Count);
+            }
+        }
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {

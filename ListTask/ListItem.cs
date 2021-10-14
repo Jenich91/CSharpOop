@@ -14,7 +14,7 @@ namespace ListTask
 
             Data = data;
         }
-        
+
         public Item(T data, Item<T> next)
         {
             IsArgumentNotNull(data);

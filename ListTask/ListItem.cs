@@ -19,11 +19,6 @@ namespace ListTask
         {
             IsArgumentNotNull(data);
 
-            if (next == null)
-            {
-                throw new ArgumentNullException("Аргумент " + nameof(next) + " имеет значение null");
-            }
-
             Data = data;
             Next = next;
         }

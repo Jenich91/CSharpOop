@@ -8,8 +8,6 @@ namespace ListTask
     {
         public Item<T> Head { get; private set; }
 
-        public Item<T> Tail { get; private set; }
-
         public int Count { get; private set; }
 
         public LinkedList()
@@ -22,7 +20,7 @@ namespace ListTask
         {
             var item = new Item<T>(data);
             Head = item;
-            Count = 1;
+            Count++;
         }
 
         public int GetListSize()
@@ -87,19 +85,30 @@ namespace ListTask
 
             if (index == 0)
             {
+                Console.WriteLine("Значение удаленного элемента: " + Head.Data);
+
                 RemoveFirst();
-                Count--;
                 return;
             }
 
-            Item<T> currentItem = Head;
 
-            for (int i = 0; i < index; i++)
+            Item<T> currentItem = Head, previosItem = null;
+            for (int i = 0; i <= index; i++)
             {
-                currentItem = currentItem.Next;
-            }
+                if (i == index)
+                {
+                    Console.WriteLine("Значение удаленного элемента: " + currentItem.Data);
+                    previosItem.Next = currentItem.Next;
 
-            Console.WriteLine("Значение удаленного элемента по индексу " + index + ": " + currentItem.Data);
+                    Count--;
+                }
+
+                if (currentItem != null)
+                {
+                    previosItem = currentItem; // сдвиг позиции
+                    currentItem = currentItem.Next;
+                }
+            }
         }
 
         public void InsertFirst(T data)
@@ -112,7 +121,7 @@ namespace ListTask
 
         public void Insert(T data, int index)
         {
-            if (index < 0 || index > Count - 1)
+            if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException("Значение аргумента не соответствует допустимому диапазону значений" + index);
             }
@@ -120,15 +129,26 @@ namespace ListTask
             if (index == 0)
             {
                 InsertFirst(data);
+                return;
             }
 
-            int indexCount = 0;
-            for (Item<T> item = Head; indexCount < index; item = item.Next, indexCount++)
+            Item<T> currentItem = Head, previosItem = null;
+            for (int i = 0; i <= index; i++)
             {
-                var newItem = new Item<T>(data, item.Next);
-                item.Next = newItem;
+                if (i == index)
+                {
+                    var newItem = new Item<T>(data, previosItem.Next); // вставка, установка ссылок
+                    previosItem.Next = newItem;
 
-                Count++;
+                    Count++;
+                    return;
+                }
+
+                if (currentItem != null)
+                {
+                    previosItem = currentItem; // сдвиг позиции
+                    currentItem = currentItem.Next;
+                }
             }
         }
 
@@ -140,7 +160,6 @@ namespace ListTask
                 if (item.Data.Equals(data))
                 {
                     Remove(indexCount);
-                    Count--;
                     return true;
                 }
             }
@@ -179,7 +198,7 @@ namespace ListTask
                 throw new ArgumentNullException("Аргумент " + nameof(anotherList) + " имеет значение null");
             }
 
-            for (Item<T> item = Head; item != null; item = item.Next)
+            for (Item<T> item = Head; item.Next != null; item = item.Next)
             {
                 anotherList.Insert(item.Data, Count);
             }

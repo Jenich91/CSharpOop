@@ -70,13 +70,18 @@ namespace ListTask
                     currentItem = currentItem.Next;
                 }
 
-                Console.WriteLine("Cтарое значение по индексу " + index + ": " + currentItem.Data);
+                SetReturn(index, currentItem);
 
                 currentItem.Data = value;
             }
         }
 
-        public void Remove(int index)
+        private static T SetReturn(int index, Item<T> currentItem)
+        {
+            return currentItem.Data;
+        }
+
+        public T Remove(int index)
         {
             if (index < 0 || index > this.Count - 1)
             {
@@ -85,30 +90,34 @@ namespace ListTask
 
             if (index == 0)
             {
-                Console.WriteLine("Значение удаленного элемента: " + Head.Data);
+                return RemoveFirst();
 
-                RemoveFirst();
-                return;
             }
-
-
-            Item<T> currentItem = Head, previosItem = null;
-            for (int i = 0; i <= index; i++)
+            else
             {
-                if (i == index)
-                {
-                    Console.WriteLine("Значение удаленного элемента: " + currentItem.Data);
-                    previosItem.Next = currentItem.Next;
+                Item<T> currentItem = Head, previosItem = null;
+                T oldValue = default;
 
-                    Count--;
+                for (int i = 0; i <= index; i++)
+                {
+                    if (i == index)
+                    {
+                        previosItem.Next = currentItem.Next;
+                        oldValue = currentItem.Data;
+
+                        Count--;
+                    }
+
+                    if (currentItem != null)
+                    {
+                        previosItem = currentItem; // сдвиг позиции
+                        currentItem = currentItem.Next;
+                    }
                 }
 
-                if (currentItem != null)
-                {
-                    previosItem = currentItem; // сдвиг позиции
-                    currentItem = currentItem.Next;
-                }
+                return oldValue;
             }
+
         }
 
         public void InsertFirst(T data)
@@ -170,9 +179,7 @@ namespace ListTask
         public T RemoveFirst()
         {
             T oldValue = Head.Data;
-
             Head = Head.Next;
-
             Count--;
 
             return oldValue;
@@ -180,15 +187,19 @@ namespace ListTask
 
         public void Reverse()
         {
-            for (Item<T> currentItem = Head, previosItem = null;
-                currentItem != null;
-                previosItem = currentItem, currentItem = currentItem.Next)
+            Item<T> previous = null;
+            Item<T> current = Head;
+
+            while (current != null)
             {
-                Item<T> nextItem = currentItem.Next;
-                currentItem.Next = previosItem;
-                previosItem = currentItem;
-                currentItem = nextItem;
+                Item<T> next = current.Next;
+                current.Next = previous;
+
+                previous = current;
+                current = next;
             }
+
+            Head = previous;
         }
 
         public void CopyTo(LinkedList<T> anotherList)
@@ -198,9 +209,9 @@ namespace ListTask
                 throw new ArgumentNullException("Аргумент " + nameof(anotherList) + " имеет значение null");
             }
 
-            for (Item<T> item = Head; item.Next != null; item = item.Next)
+            for (Item<T> item = Head; item != null; item = item.Next)
             {
-                anotherList.Insert(item.Data, Count);
+                anotherList.Insert(item.Data, anotherList.Count);
             }
         }
 

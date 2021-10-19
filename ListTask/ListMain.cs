@@ -14,10 +14,13 @@ namespace ListTask
             list.Insert("item4", 4);
             list.Insert("item5", 5);
 
-            Console.WriteLine(list.RemoveFirst());
+            Console.WriteLine(list[3] = "setTest");
+            
+            //var list2 = new LinkedList<String>();
 
+            //list.CopyTo(list2);
 
-            //foreach (var item in list)
+            //foreach (var item in list2)
             //{
             //    Console.WriteLine(item);
             //}
